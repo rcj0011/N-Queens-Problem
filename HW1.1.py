@@ -1,14 +1,12 @@
 import copy
-
 state = []
 
-def solveNQueens(n, nth=1):
+def solveNQueens(n):
     global state
     for i in range(n):
         state.append(i+1)
 
     score = scoreFunction(n, state)
-    
     while score != 0:
         for q in range(n):
             for nay in getNeighbors(n, state[q]):
@@ -44,4 +42,4 @@ def getNeighbors(n, queen):
     return neighbors
 
 if __name__ == "__main__":
-    solveNQueens(25, 1)
+    solveNQueens(25)
