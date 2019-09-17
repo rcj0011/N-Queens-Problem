@@ -1,7 +1,6 @@
 queensList = []
 
 def solveNQueens(n):
-    print (n)
     initialState = []
 
     for i in range(n):
@@ -19,12 +18,8 @@ def scoreFunction():
         for Q in queensList:
             if q.col != Q.col and (q.row == Q.row or abs(q.col-Q.col) == abs(q.row-Q.row)):
                 score += 1
-                q.conflicts.append(Q)
-    
-    for q in queensList:
-        q.resetConflicts()
 
-    return score
+    return int(score/2)
 
 def getNeighbors(n, queen):
     neighbors = [-1,-1]
