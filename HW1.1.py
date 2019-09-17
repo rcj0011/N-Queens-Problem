@@ -1,49 +1,46 @@
-queensList = []
+import copy
+
+state = []
 
 def solveNQueens(n):
-    initialState = []
-
+    global state
     for i in range(n):
-        initialState.append(i+1)
-        q = Queen(i+1, i+1)
-        queensList.append(q)
+        state.append(i+1)
 
-    getNeighbors(n, queensList[0])
-    print (scoreFunction())
+    score = scoreFunction(n, state)
+    while score != 0:
+        for q in range(n):
+            for nay in getNeighbors(n, state[q]):
+                newState = copy.deepcopy(state)
+                newState[q] = nay
+                temp = scoreFunction(n, newState)
+                if temp <= score:
+                    score = temp
+                    state = newState
+    
+    print (state, score)
 
-def scoreFunction():
+def scoreFunction(n, state):
     score = 0
 
-    for q in queensList:
-        for Q in queensList:
-            if q.col != Q.col and (q.row == Q.row or abs(q.col-Q.col) == abs(q.row-Q.row)):
-                score += 1
+    for q in range(n):
+        for Q in range(n):
+            if q != Q:
+                if state[q] == state[Q] or abs(state[q]-state[Q]) == abs(q-Q):
+                    score += 1
 
     return int(score/2)
 
 def getNeighbors(n, queen):
-    neighbors = [-1,-1]
-    if queen.col < n:
-        neighbors[0] = queen.col + 1
-    if queen.col > 0:
-        neighbors[1] = queen.col - 1
+    neighbors = []
+    
+    for i in range(1,n+1):
+        if queen == i:
+            pass
+        else:
+            neighbors.append(i)
 
     return neighbors
-
-class Queen():
-    col = 0
-    row = 0
-    conflicts = []
-
-    def __init__(self, row, col):
-        self.row = row
-        self.col = col
-
-    def resetConflicts(self):
-        self.conflicts = []
-    
-    def setRow(self, row):
-        self.row = row
 
 if __name__ == "__main__":
     solveNQueens(25)
