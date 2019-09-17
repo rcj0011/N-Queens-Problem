@@ -9,16 +9,15 @@ def solveNQueens(n):
         q = Queen(i+1, i+1)
         queensList.append(q)
 
-    queensList[0].setRow(3)
     getNeighbors(n, queensList[0])
-    scoreFunction()
+    print (scoreFunction())
 
 def scoreFunction():
     score = 0
 
     for q in queensList:
         for Q in queensList:
-            if q.col != Q.col and (q.row == Q.row or abs(q.col-Q.col) == abs(q.row-Q.row)) and Q not in q.conflicts:
+            if q.col != Q.col and (q.row == Q.row or abs(q.col-Q.col) == abs(q.row-Q.row)):
                 score += 1
                 q.conflicts.append(Q)
     
