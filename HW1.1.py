@@ -8,7 +8,9 @@ def solveNQueens(n):
         initialState.append(i+1)
         q = Queen(i+1, i+1)
         queensList.append(q)
-    
+
+    queensList[0].setRow(3)
+    getNeighbors(n, queensList[0])
     scoreFunction()
 
 def scoreFunction():
@@ -16,7 +18,7 @@ def scoreFunction():
 
     for q in queensList:
         for Q in queensList:
-            if q.col != Q.col and (q.row == Q.row or q.col-Q.col == q.row-Q.row) and Q not in q.conflicts: #absolute value
+            if q.col != Q.col and (q.row == Q.row or abs(q.col-Q.col) == abs(q.row-Q.row)) and Q not in q.conflicts:
                 score += 1
                 q.conflicts.append(Q)
     
@@ -25,9 +27,14 @@ def scoreFunction():
 
     return score
 
-def getNeighbors(queen):
+def getNeighbors(n, queen):
+    neighbors = [-1,-1]
+    if queen.col < n:
+        neighbors[0] = queen.col + 1
+    if queen.col > 0:
+        neighbors[1] = queen.col - 1
 
-    return None
+    return neighbors
 
 class Queen():
     col = 0
@@ -40,6 +47,9 @@ class Queen():
 
     def resetConflicts(self):
         self.conflicts = []
+    
+    def setRow(self, row):
+        self.row = row
 
 if __name__ == "__main__":
     solveNQueens(25)
