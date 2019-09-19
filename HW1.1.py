@@ -1,41 +1,42 @@
-#Assignment 1
-#Group: Dillon Thompson, Cameron Jewell, Ethan Smyth, Naeem Ghossein
+# Homework Assignment 1 Problem 1
+# All code written for COMP 6600 under Dr. Bo Liu on or before 09/20/19
+# Group: Dillon Thompson, Cameron Jewell, Ethan Smyth, Naeem Ghossein
 
 import copy
 state = []
 
-#this is our method for solving the 25 queens on the board
-#we used the hillclimbing method.
+# Method for solving the N-Queens problem
+# Used the hillclimbing method.
 def solveNQueens(n):
     global state
     for i in range(n):
         state.append(i+1)
 
-    #check the score before beginning hillclimbing
+    # Set initial score before beginning hillclimbing
     score = scoreFunction(n, state)
 
-    #begin hillclimbing
-    #while the score is not zero iterate over the queens
+    # While the score is not, zero iterate over the queens
     while score != 0:
-        #iterate through all the queens
         for q in range(n):
-            #iterate through each queens neighbors
-            #if a state with a lower score is found, make that the new state.
+            # Iterate through each queens neighbors
             for nay in getNeighbors(n, state[q]):
+                # Create a copy of current state
                 newState = copy.deepcopy(state)
+                # Alter newState with possible improvement
                 newState[q] = nay
                 temp = scoreFunction(n, newState)
+                # If a state with a lower score is found, make that the new state.
                 if temp <= score:
                     score = temp
                     state = newState
-    #print results
+    # Print result
     print (state, score)
 
-#this is our score function, it keeps track of conflicts between queens.
-#the lower the score, the better.
+# Score function; it keeps track of conflicts between queens.
+# Lower is better.
 def scoreFunction(n, state):
     score = 0
-    #iterate through the rows and columns and calculate the score of the current state
+    # Iterate through the rows and columns and calculate the score of the current state
     for q in range(n):
         for Q in range(n):
             if q != Q:
@@ -44,16 +45,16 @@ def scoreFunction(n, state):
 
     return int(score/2)
 
-#this method returns the neighbors of the currently selected queen
-#the neighbors are the squares in it's respective column
+# Returns the neighbors of the currently selected queen
+# The neighbors are the squares in the provided queen's column
 def getNeighbors(n, queen):
     neighbors = []
-    #go through the column of the current queen
-    #if you hit the square the queen is already in then pass over it
-    #otherwise increment the score.
+    # Go through the column of the current queen
     for i in range(1,n+1):
+        # If you hit the square the queen is already in then pass over it
         if queen == i:
             pass
+        # Otherwise increment the score.
         else:
             neighbors.append(i)
 
